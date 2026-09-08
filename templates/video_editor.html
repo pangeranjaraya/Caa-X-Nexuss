@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <h2 class="text-2xl font-bold mb-6 flex items-center gap-2"><i class="fas fa-search text-purple-400"></i> Cari Video Mentahan</h2>
+    
+    <!-- Search Bar -->
+    <div class="flex gap-2 mb-8">
+        <input type="text" id="searchInput" placeholder="Contoh: nature, cyberpunk, rain..." class="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500 transition text-sm">
+        <button onclick="searchVideos()" class="bg-purple-600 hover:bg-purple-500 text-white px-6 py-3 rounded-xl font-medium transition shadow-lg shadow-purple-600/20">Cari</button>
+    </div>
+
+    <!-- Video Grid -->
+    <div id="videoGrid" class="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <!-- Video items will appear here -->
+        <div class="col-span-full text-center text-slate-500 py-10">Ketik kata kunci di atas untuk mencari video.</div>
+    </div>
+</div>
+
+<script>
+    async function searchVideos() {
+        const query = document.getElementById('searchInput').value;
+        const grid = document.getElementById('videoGrid');
+        grid.innerHTML = '<div class="col-span-full text-center text-purple-400 animate-pulse">Sedang mencari...</div>';
+
+        const res = await fetch(`/api/search_video?q=${query}`);
+        const data = await res.json();
+
+        grid.innerHTML = '';
+        if(data.videos) {
+            data.videos.forEach(video => {
+                const clip = video.video_files.find(f => f.width <= 720) || video.video_files[0];
+                const card = `
+                    <div class="glass rounded-2xl overflow-hidden group relative aspect-[9/16]">
+                        <video src="${clip.link}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" muted loop onmouseover="this.play()" onmouseout="this.pause()"></video>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition flex flex-col justify-end p-4">
+                            <button onclick="useVideo('${clip.link}')" class="bg-white text-black text-xs font-bold py-2 rounded-lg w-full hover:bg-purple-400 transition">GUNAKAN INI</button>
+                        </div>
+                    </div>
+                `;
+                grid.innerHTML += card;
+            });
+        }
+    }
+
+    function useVideo(url) {
+        alert(`Video dipilih! Link: ${url}\n(Logic editor akan muncul di sini)`);
+        // Di sini nanti redirect ke halaman editor detail
+    }
+</script>
+{% endblock %}
