@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-md mx-auto text-center">
+    <h2 class="text-2xl font-bold mb-2">Photo Booth Studio</h2>
+    <p class="text-slate-400 text-sm mb-8">Pilih template dan upload fotomu.</p>
+
+    <div class="grid grid-cols-2 gap-4 mb-8">
+        <div class="glass p-4 rounded-2xl border-purple-500/50 cursor-pointer hover:bg-white/5 transition">
+            <div class="aspect-[3/4] bg-slate-800 rounded-lg mb-2 flex items-center justify-center border-2 border-dashed border-slate-600">4 Strip</div>
+            <span class="text-sm font-bold">Classic 4</span>
+        </div>
+        <div class="glass p-4 rounded-2xl cursor-pointer hover:bg-white/5 transition opacity-50">
+            <div class="aspect-[3/4] bg-slate-800 rounded-lg mb-2 flex items-center justify-center border-2 border-dashed border-slate-600">2 Strip</div>
+            <span class="text-sm font-bold">Duo</span>
+        </div>
+    </div>
+
+    <form id="uploadForm" class="space-y-4">
+        <label class="block w-full p-4 border border-white/10 rounded-xl bg-white/5 hover:bg-white/10 cursor-pointer transition">
+            <i class="fas fa-cloud-upload-alt text-2xl text-purple-400 mb-2"></i>
+            <p class="text-sm">Klik untuk pilih 4 foto</p>
+            <input type="file" name="photos" multiple accept="image/*" class="hidden" onchange="previewFiles()">
+        </label>
+        <div id="previewArea" class="grid grid-cols-4 gap-2"></div>
+        
+        <button type="button" onclick="processPhoto()" class="w-full bg-gradient-to-r from-purple-600 to-blue-600 py-3 rounded-xl font-bold shadow-lg shadow-purple-600/20 hover:opacity-90 transition">PROSES FOTO</button>
+    </form>
+</div>
+
+<script>
+    function previewFiles() {
+        const input = document.querySelector('input[type="file"]');
+        const area = document.getElementById('previewArea');
+        area.innerHTML = '';
+        Array.from(input.files).forEach(file => {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                area.innerHTML += `<img src="${e.target.result}" class="w-full aspect-square object-cover rounded-lg border border-white/10">`;
+            }
+            reader.readAsDataURL(file);
+        });
+    }
+
+    async function processPhoto() {
+        const formData = new FormData(document.getElementById('uploadForm'));
+        const btn = document.querySelector('button[onclick="processPhoto()"]');
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+        
+        const res = await fetch('/api/process_photo', { method: 'POST', body: formData });
+        const data = await res.json();
+        
+        if(data.url) {
+            window.location.href = data.url; // Download otomatis
+        }
+        btn.innerHTML = 'PROSES FOTO';
+    }
+</script>
+{% endblock %}
