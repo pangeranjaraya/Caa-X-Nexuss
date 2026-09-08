@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="text-center mt-8">
+    <div class="inline-block p-3 rounded-full bg-purple-500/10 mb-4 border border-purple-500/20">
+        <i class="fas fa-sparkles text-purple-400"></i>
+    </div>
+    <h2 class="text-4xl md:text-5xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white via-purple-200 to-purple-400">
+        CAA X NEXUS
+    </h2>
+    <p class="text-slate-400 text-sm md:text-base max-w-md mx-auto leading-relaxed">
+        Platform editing premium untuk kreator konten. Video mentahan berkualitas & Photo Booth aesthetic dalam satu genggaman.
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-12 max-w-2xl mx-auto">
+        <a href="/video" class="glass p-8 rounded-3xl hover:border-purple-500/50 hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] transition-all duration-300 group block relative overflow-hidden">
+            <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition"><i class="fas fa-film text-9xl"></i></div>
+            <i class="fas fa-play-circle text-4xl text-purple-400 mb-4 group-hover:scale-110 transition-transform"></i>
+            <h3 class="text-2xl font-bold mb-2">Video Studio</h3>
+            <p class="text-xs text-slate-400">Cari video mentahan, tambah audio & teks.</p>
+        </a>
+
+        <a href="/photo" class="glass p-8 rounded-3xl hover:border-blue-500/50 hover:shadow-[0_0_30px_rgba(59,130,246,0.15)] transition-all duration-300 group block relative overflow-hidden">
+            <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition"><i class="fas fa-camera text-9xl"></i></div>
+            <i class="fas fa-camera-retro text-4xl text-blue-400 mb-4 group-hover:scale-110 transition-transform"></i>
+            <h3 class="text-2xl font-bold mb-2">Photo Booth</h3>
+            <p class="text-xs text-slate-400">Buat strip foto lucu, bucin, & keren.</p>
+        </a>
+    </div>
+</div>
+{% endblock %}
