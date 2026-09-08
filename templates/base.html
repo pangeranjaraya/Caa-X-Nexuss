@@ -8,37 +8,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
-        
-        body { 
-            background-color: #050505; 
-            color: #e2e8f0; 
-            font-family: 'Inter', sans-serif; 
-        }
-        
-        /* Glassmorphism Effect */
-        .glass { 
-            background: rgba(20, 20, 20, 0.6); 
-            backdrop-filter: blur(12px); 
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08); 
-        }
-        
+        body { background-color: #050505; color: #e2e8f0; font-family: 'Inter', sans-serif; }
+        .glass { background: rgba(20, 20, 20, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
         .neon-text { text-shadow: 0 0 15px rgba(168, 85, 247, 0.6); }
-        .neon-border { box-shadow: 0 0 20px rgba(168, 85, 247, 0.2); }
-        
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: #000; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
-
-        /* Animations */
         .fade-in { animation: fadeIn 0.5s ease-in-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body class="overflow-x-hidden selection:bg-purple-500 selection:text-white">
-
-    <!-- Navbar -->
     <nav class="fixed top-0 w-full z-50 glass px-6 py-4 flex justify-between items-center border-b border-white/5">
         <div class="flex items-center gap-4">
             <button id="menu-btn" class="text-purple-400 hover:text-white transition"><i class="fas fa-bars text-xl"></i></button>
@@ -46,8 +23,6 @@
         </div>
         <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-purple-600 to-blue-600 shadow-lg shadow-purple-500/20"></div>
     </nav>
-
-    <!-- Sidebar Menu -->
     <div id="sidebar" class="fixed left-[-100%] top-0 h-full w-72 bg-[#0a0a0a] border-r border-white/10 z-50 transition-all duration-300 pt-24 px-6 shadow-2xl">
         <div class="space-y-2">
             <a href="/" class="flex items-center gap-4 p-3 rounded-xl hover:bg-white/5 text-slate-300 hover:text-white transition"><i class="fas fa-home w-6"></i> Home</a>
@@ -56,44 +31,21 @@
             <a href="https://t.me/CaaCyberr404" target="_blank" class="flex items-center gap-4 p-3 rounded-xl hover:bg-white/5 text-slate-300 hover:text-white transition"><i class="fab fa-telegram w-6"></i> Developer</a>
         </div>
     </div>
-
-    <!-- Main Content -->
-    <div class="pt-24 pb-28 px-5 min-h-screen fade-in">
-        {% block content %}{% endblock %}
-    </div>
-
-    <!-- Bottom Navigation -->
+    <div class="pt-24 pb-28 px-5 min-h-screen fade-in">{% block content %}{% endblock %}</div>
     <div class="fixed bottom-0 w-full glass border-t border-white/10 z-40">
         <div class="flex justify-around items-center py-3 max-w-md mx-auto">
-            <a href="/video" class="flex flex-col items-center gap-1 text-slate-500 hover:text-purple-400 transition group">
-                <div class="p-2 rounded-full group-hover:bg-purple-500/10"><i class="fas fa-video text-lg"></i></div>
-                <span class="text-[10px] font-medium">Edit</span>
-            </a>
-            <a href="/photo" class="flex flex-col items-center gap-1 text-slate-500 hover:text-purple-400 transition group">
-                <div class="p-2 rounded-full group-hover:bg-purple-500/10"><i class="fas fa-images text-lg"></i></div>
-                <span class="text-[10px] font-medium">Templat</span>
-            </a>
-            <a href="/profile" class="flex flex-col items-center gap-1 text-slate-500 hover:text-purple-400 transition group">
-                <div class="p-2 rounded-full group-hover:bg-purple-500/10"><i class="fas fa-user-gear text-lg"></i></div>
-                <span class="text-[10px] font-medium">Profile</span>
-            </a>
+            <a href="/video" class="flex flex-col items-center gap-1 text-slate-500 hover:text-purple-400 transition group"><div class="p-2 rounded-full group-hover:bg-purple-500/10"><i class="fas fa-video text-lg"></i></div><span class="text-[10px] font-medium">Edit</span></a>
+            <a href="/photo" class="flex flex-col items-center gap-1 text-slate-500 hover:text-purple-400 transition group"><div class="p-2 rounded-full group-hover:bg-purple-500/10"><i class="fas fa-images text-lg"></i></div><span class="text-[10px] font-medium">Templat</span></a>
+            <a href="/profile" class="flex flex-col items-center gap-1 text-slate-500 hover:text-purple-400 transition group"><div class="p-2 rounded-full group-hover:bg-purple-500/10"><i class="fas fa-user-gear text-lg"></i></div><span class="text-[10px] font-medium">Profile</span></a>
         </div>
     </div>
-
     <script>
         const menuBtn = document.getElementById('menu-btn');
         const sidebar = document.getElementById('sidebar');
         let isOpen = false;
-
         menuBtn.addEventListener('click', () => {
             isOpen = !isOpen;
             sidebar.style.left = isOpen ? '0' : '-100%';
-            // Overlay effect
-            if(isOpen) {
-                document.body.style.overflow = 'hidden';
-            } else {
-                document.body.style.overflow = 'auto';
-            }
         });
     </script>
 </body>
